@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Carbon Storage PWA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(() => {
+                console.log("Service Worker Registered");
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>樹木碳儲存量計算</h1>
+    <label for="treeType">選擇樹種：</label>
+    <select id="treeType"></select>
+    <br>
+    <label for="treeCount">輸入樹木數量：</label>
+    <input type="number" id="treeCount" min="1" value="1">
+    <br>
+    <button onclick="calculateCarbon()">計算碳儲存量</button>
+    <h2>結果：<span id="carbonResult">0</span> 公斤</h2>
+    
+    <script src="script.js"></script>
+</body>
+</html>
