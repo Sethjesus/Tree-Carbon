@@ -2,7 +2,9 @@ from fastapi import FastAPI
 import math
 
 app = FastAPI()
-
+@app.get("/")
+def read_root():
+    return {"message": "Tree-Carbon 校園碳匯 API 啟動"}
 # 碳匯數據 (可從 API 或 CSV 讀取)
 carbon_factors = {
     "天然針葉林": {"D": 0.41, "BEF": 1.27, "R": 0.22, "CF": 0.4821},
