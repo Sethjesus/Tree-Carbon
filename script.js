@@ -1,46 +1,51 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const treeTypeSelect = document.getElementById("treeType");
-
-    // 樹種資料 (可擴充)
-    const treesData = [
-        { name: "天然針葉林", D: 0.41, BEF: 1.27, R: 0.22, CF: 0.4821 },
-        { name: "天然針闊葉混淆林", D: 0.49, BEF: 1.34, R: 0.23, CF: 0.4756 },
-        { name: "天然闊葉林", D: 0.56, BEF: 1.4, R: 0.24, CF: 0.4691 },
-        { name: "人工針葉林", D: 0.41, BEF: 1.27, R: 0.22, CF: 0.4821 },
-        { name: "人工針闊葉混淆林", D: 0.49, BEF: 1.34, R: 0.23, CF: 0.4756 },
-        { name: "人工闊葉林", D: 0.56, BEF: 1.4, R: 0.24, CF: 0.4691 },
-        { name: "木竹混淆林", D: 0.49, BEF: 1.34, R: 0.23, CF: 0.4756 },
-        { name: "竹林", D: 0.46, BEF: 0, R: 0, CF: 0.4732 } // 竹林 BEF、R = 0，因為竹子計算方式不同
-    ];
-
-    // 加載樹種選項
-    treesData.forEach((tree, index) => {
-        let option = document.createElement("option");
-        option.value = index;
-        option.textContent = tree.name;
-        treeTypeSelect.appendChild(option);
-    });
-});
+// 樹種對應的碳儲存因子 (以立方米計算)
+const treeData = {
+    "天然針葉林": 0.4821,
+    "天然針闊葉混淆林": 0.4756,
+    "天然闊葉林": 0.4691,
+    "人工針葉林": 0.4821,
+    "人工針闊葉混淆林": 0.4756,
+    "人工闊葉林": 0.4691,
+    "木竹混淆林": 0.4756,
+    "竹林": 0.4732
+};
 
 function calculateCarbon() {
-    const treeTypeIndex = document.getElementById("treeType").value;
-    const treeHeight = parseFloat(document.getElementById("treeHeight").value);
-    const treeDiameter = parseFloat(document.getElementById("treeDiameter").value);
-    const treeCount = parseInt(document.getElementById("treeCount").value);
+    // 獲取用戶輸入
+    let treeType = document.getElementById("treeType").value;
+    let height = parseFloat(document.getElementById("treeHeight").value);
+    let diameter = parseFloat(document.getElementById("treeDiameter").value);
+    let count = parseInt(document.getElementById("treeCount").value, 10);
 
-    if (isNaN(treeHeight) || isNaN(treeDiameter) || isNaN(treeCount) || treeTypeIndex === "") {
-        alert("請輸入正確的樹木數據！");
+    if (!treeType || isNaN(height) || isNaN(diameter) || isNaN(count)) {
+        alert("請輸入正確的數值");
         return;
     }
 
-    const selectedTree = treesData[treeTypeIndex];
+    // 計算單棵樹的體積 (圓柱體近似計算)
+    let radius = diameter / 200; // 轉換為公尺
+    let volume = Math.PI * Math.pow(radius, 2) * height; // 立方公尺
 
-    // 計算樹木體積 (π * r² * h)
-    const radius = treeDiameter / 2;
-    const volume = Math.PI * Math.pow(radius, 2) * treeHeight;
+    // 取得碳儲存比例 (CF)
+    let carbonFactor = treeData[treeType] || 0.47;
 
-    // 計算碳儲存量
-    const carbonStorage = selectedTree.D * selectedTree.BEF * selectedTree.R * selectedTree.CF * volume * treeCount;
+    // 計算總碳儲存量
+    let carbonStorage = volume * carbonFactor * count * 1000; // 轉換為公斤
 
-    document.getElementById("carbonResult").textContent = carbonStorage.toFixed(2);
+    // 更新結果顯示
+    document.getElementById("carbonResult").innerText = carbonStorage.toFixed(2);
 }
+
+// 動態加載樹種選項
+function populateTreeTypes() {
+    let treeSelect = document.getElementById("treeType");
+    for (let tree in treeData) {
+        let option = document.createElement("option");
+        option.value = tree;
+        option.textContent = tree;
+        treeSelect.appendChild(option);
+    }
+}
+
+// 頁面加載時執行
+window.onload = populateTreeTypes;
