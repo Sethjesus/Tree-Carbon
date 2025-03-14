@@ -1,17 +1,16 @@
-// 樹種對應的碳儲存因子 (CF)
-const treeData = {
-    "天然針葉林": 0.4821,
-    "天然針闊葉混淆林": 0.4756,
-    "天然闊葉林": 0.4691,
-    "人工針葉林": 0.4821,
-    "人工針闊葉混淆林": 0.4756,
-    "人工闊葉林": 0.4691,
-    "木竹混淆林": 0.4756,
-    "竹林": 0.4732
-};
+// 碳轉換數據
+const treeData = [
+    { type: "天然針葉林", D: 0.41, BEF: 1.27, BCEF: 0.51, R: 0.22, CF: 0.4821 },
+    { type: "天然針闊葉混淆林", D: 0.49, BEF: 1.34, BCEF: 0.72, R: 0.23, CF: 0.4756 },
+    { type: "天然闊葉林", D: 0.56, BEF: 1.4, BCEF: 0.92, R: 0.24, CF: 0.4691 },
+    { type: "人工針葉林", D: 0.41, BEF: 1.27, BCEF: 0.51, R: 0.22, CF: 0.4821 },
+    { type: "人工針闊葉混淆林", D: 0.49, BEF: 1.34, BCEF: 0.72, R: 0.23, CF: 0.4756 },
+    { type: "人工闊葉林", D: 0.56, BEF: 1.4, BCEF: 0.92, R: 0.24, CF: 0.4691 },
+    { type: "木竹混淆林", D: 0.49, BEF: 1.34, BCEF: 0.72, R: 0.23, CF: 0.4756 },
+    { type: "竹林", D: 0.46, BEF: 1.3, BCEF: 0.60, R: 0.46, CF: 0.4732 }
+];
 
 function calculateCarbon() {
-    // 取得輸入值
     let height = parseFloat(document.getElementById("treeHeight").value);
     let diameter = parseFloat(document.getElementById("treeDiameter").value);
     let count = parseInt(document.getElementById("treeCount").value, 10);
@@ -21,45 +20,27 @@ function calculateCarbon() {
         return;
     }
 
-    // 計算體積 (圓柱體近似)
     let radius = diameter / 200; // 轉換為公尺
     let volume = Math.PI * Math.pow(radius, 2) * height; // 立方公尺
 
-    // 取得選擇的樹種
-    let selectedTree = document.getElementById("treeType").value;
-    let selectedFactor = treeData[selectedTree] || 0.47;
+    let carbonTable = document.getElementById("carbonTable");
+    carbonTable.innerHTML = ""; // 清空表格
 
-    // 計算總碳儲存量
-    let carbonStorage = volume * selectedFactor * count * 1000; // 轉換為公斤
-    document.getElementById("carbonResult").innerText = carbonStorage.toFixed(2);
+    treeData.forEach(tree => {
+        let biomass = volume * tree.BCEF * count; // 生物量
+        let carbonStorage = biomass * tree.CF * 1000; // 轉換為公斤
 
-    // 更新不同樹種換算結果
-    updateConversionList(volume, count);
-}
-
-function updateConversionList(volume, count) {
-    let conversionList = document.getElementById("conversionList");
-    conversionList.innerHTML = ""; // 清空列表
-
-    for (let tree in treeData) {
-        let factor = treeData[tree];
-        let carbonStorage = volume * factor * count * 1000; // 轉換為公斤
-
-        let listItem = document.createElement("li");
-        listItem.innerHTML = `${tree}：碳儲存量 = ${volume.toFixed(2)} × ${factor} × ${count} × 1000 = <b>${carbonStorage.toFixed(2)}</b> 公斤`;
-        conversionList.appendChild(listItem);
-    }
-}
-
-// 動態加載樹種選項
-function populateTreeTypes() {
-    let treeSelect = document.getElementById("treeType");
-    for (let tree in treeData) {
-        let option = document.createElement("option");
-        option.value = tree;
-        option.textContent = tree;
-        treeSelect.appendChild(option);
-    }
+        let row = `<tr>
+            <td>${tree.type}</td>
+            <td>${tree.D}</td>
+            <td>${tree.BEF}</td>
+            <td>${tree.BCEF}</td>
+            <td>${tree.R}</td>
+            <td>${tree.CF}</td>
+            <td>${carbonStorage.toFixed(2)}</td>
+        </tr>`;
+        carbonTable.innerHTML += row;
+    });
 }
 
 // 監聽輸入變化，自動更新計算
@@ -68,7 +49,4 @@ document.getElementById("treeDiameter").addEventListener("input", calculateCarbo
 document.getElementById("treeCount").addEventListener("input", calculateCarbon);
 
 // 頁面加載時執行
-window.onload = function() {
-    populateTreeTypes();
-    calculateCarbon();
-};
+window.onload = calculateCarbon;
