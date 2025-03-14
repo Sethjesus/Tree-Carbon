@@ -30,6 +30,8 @@ function calculateCarbon() {
         let biomass = volume * tree.BCEF * count; // 生物量
         let carbonStorage = biomass * tree.CF * 1000; // 轉換為公斤
 
+        console.log(`樹種: ${tree.type}, 計算碳儲存量: ${carbonStorage.toFixed(2)} 公斤`);
+
         let row = `<tr>
             <td>${tree.type}</td>
             <td>${tree.D}</td>
@@ -43,10 +45,13 @@ function calculateCarbon() {
     });
 }
 
-// 監聽輸入變化，自動更新計算
+// 確保所有輸入框變動時都會重新計算
 document.getElementById("treeHeight").addEventListener("input", calculateCarbon);
 document.getElementById("treeDiameter").addEventListener("input", calculateCarbon);
 document.getElementById("treeCount").addEventListener("input", calculateCarbon);
 
-// 頁面加載時執行
-window.onload = calculateCarbon;
+// 頁面加載時確保函數執行
+window.onload = () => {
+    console.log("Window loaded. Running calculateCarbon()");
+    calculateCarbon();
+};
