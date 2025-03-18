@@ -1,60 +1,7 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>JP ESG 碳儲存計算</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <script src="script.js" defer></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Service Worker registered!', reg))
-            .catch(err => console.log('Service Worker registration failed:', err));
-        }
-    </script>
-</head>
-<body>
-    <div class="content">
-        <h1>JP ESG 碳儲存計算</h1>
-        <h2>校園碳匯推廣方案</h2>
-        
-        <label>選擇樹種：
-            <select id="treeType"></select>
-        </label>
-        <label>輸入樹高（公尺）：</label>
-        <input type="number" id="treeHeight" value="10">
-
-        <label>輸入胸高直徑（公分）：</label>
-        <input type="number" id="treeDiameter" value="10">
-
-        <label>輸入樹木數量：</label>
-        <input type="number" id="treeCount" value="1">
-
-        <button id="calculateBtn">計算碳儲存量</button>
-        <button id="exportExcel">匯出 Excel</button>
-        <button id="clearTable" class="clr-btn">CLR</button>
-
-        <h2>碳儲存量比較表：</h2>
-        <div class="table-container">
-            <table id="carbonTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>林型</th>
-                        <th>樹高 (m)</th>
-                        <th>胸高直徑 (cm)</th>
-                        <th>數量</th>
-                        <th>(kg CO₂e)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <h2 id="totalCarbon">總碳儲存量: 0 公斤 CO₂e</h2>
-    </div>
-    <a href="https://data.moa.gov.tw/open_search.aspx?id=I82" target="_blank" class="link-btn">資料來源農業部資料開放平台</a>
-</body>
-</html>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(reg => console.log("Service Worker registered!", reg))
+    .catch(err => console.log("Service Worker registration failed!", err));
+}
+</script>
