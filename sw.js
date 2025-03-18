@@ -28,7 +28,7 @@ self.addEventListener("activate", event => {
   );
 });
 
-// Fetch Data
+// Fetch Data (for offline access)
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(response => {
