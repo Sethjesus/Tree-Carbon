@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>JP ESG 碳儲存計算</title>
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#28a745">
-
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#28a745">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <style>
         body {
@@ -19,7 +18,6 @@
             margin: 0 auto;
             overflow: hidden;
         }
-
         .content {
             padding: 10px;
             width: 100%;
@@ -27,7 +25,6 @@
             flex-direction: column;
             align-items: center;
         }
-
         select, input, button {
             width: 90%;
             max-width: 150px;
@@ -38,7 +35,6 @@
             border: 1px solid #ccc;
             background: white;
         }
-
         label {
             color: #eef7ef; 
             font-size: 20px;
@@ -46,7 +42,6 @@
             display: block;
             text-shadow: 2px 2px 5px rgba(182, 4, 4, 0.8);
         }
-
         .table-container {
             width: 100%;
             max-height: 200px;
@@ -56,7 +51,6 @@
             border-radius: 10px;
             padding: 5px;
         }
-
         table {
             width: 90%;
             max-width: 620px;
@@ -64,25 +58,21 @@
             border-collapse: collapse;
             font-size: 14px;
         }
-
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
         }
-
         td:last-child {
             font-weight: bold;
             color: #28a745;
         }
-
         h1, h2 {
             background: rgba(0, 0, 0, 0.6);
             color: white;
             padding: 10px 20px;
             border-radius: 10px;
         }
-
         button {
             background: #28a745;
             color: white;
@@ -93,32 +83,28 @@
             font-size: 16px;
             border: none;
         }
-
         button:hover {
             background: #218838;
         }
-
         .clr-btn {
             background: #dc3545;
         }
-
         .clr-btn:hover {
             background: #c82333;
         }
         .link-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #4CAF50; /* 綠色背景 */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px; /* 圓角 */
-    font-size: 16px;
-    font-weight: bold;
-  }
-
-  .link-btn:hover {
-    background-color: #45a049; /* 滑鼠懸停時變深色 */
-  }
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #4CAF50; /* 綠色背景 */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px; /* 圓角 */
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .link-btn:hover {
+            background-color: #45a049; /* 滑鼠懸停時變深色 */
+        }
     </style>
 </head>
 <body>
@@ -131,17 +117,17 @@
         </label>
         <label>輸入樹高（公尺）：</label>
         <input type="number" id="treeHeight" value="10">
-
+    
         <label>輸入胸高直徑（公分）：</label>
         <input type="number" id="treeDiameter" value="10">
-
+    
         <label>輸入樹木數量：</label>
         <input type="number" id="treeCount" value="1">
-
+    
         <button id="calculateBtn">計算碳儲存量</button>
         <button id="exportExcel">匯出 Excel</button>
         <button id="clearTable" class="clr-btn">CLR</button>
-
+    
         <h2>碳儲存量比較表：</h2>
         <div class="table-container">
             <table id="carbonTable">
@@ -158,22 +144,22 @@
                 <tbody></tbody>
             </table>
         </div>
-
+    
         <h2 id="totalCarbon">總碳儲存量: 0 公斤 CO₂e</h2>
     </div>
-
+    
     <script>
         const treeData = [
-        { type: "天然針葉林", BEF: 1.27, R: 0.22, CF: 0.4821, Rho: 0.41, FF: 0.45 },
-            { type: "天然針闊葉混淆林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
+            { type: "天然針葉林", BEF: 1.27, R: 0.22, CF: 0.4821, Rho: 0.41, FF: 0.45 },
+            { type: "天然針闊葉混交林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
             { type: "天然闊葉林", BEF: 1.4, R: 0.24, CF: 0.4691, Rho: 0.56, FF: 0.45 },
             { type: "人工針葉林", BEF: 1.27, R: 0.22, CF: 0.4821, Rho: 0.41, FF: 0.45 },
-            { type: "人工針闊葉混淆林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
+            { type: "人工針闊葉混交林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
             { type: "人工闊葉林", BEF: 1.4, R: 0.24, CF: 0.4691, Rho: 0.56, FF: 0.45 },
-            { type: "木竹混淆林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
+            { type: "木竹混交林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
             { type: "竹林", BEF: 1.4, R: 0.46, CF: 0.4732, Rho: 0.62, FF: 0.45 }
         ];
-
+    
         function populateTreeTypes() {
             let select = document.getElementById("treeType");
             select.innerHTML = "";
@@ -184,29 +170,29 @@
                 select.appendChild(option);
             });
         }
-
+    
         document.addEventListener("DOMContentLoaded", () => {
             populateTreeTypes();
             document.getElementById("calculateBtn").addEventListener("click", calculateCarbon);
             document.getElementById("exportExcel").addEventListener("click", exportToExcel);
             document.getElementById("clearTable").addEventListener("click", clearTable);
         });
-
+    
         let totalCarbonStorage = 0;
         let serialNumber = 1;
-
+    
         function calculateCarbon() {
             let tableBody = document.querySelector("#carbonTable tbody");
             let height = parseFloat(document.getElementById("treeHeight").value);
             let dbh = parseFloat(document.getElementById("treeDiameter").value) / 100;
             let count = parseInt(document.getElementById("treeCount").value, 10);
             let selectedTree = treeData.find(tree => tree.type === document.getElementById("treeType").value);
-
+    
             if (!selectedTree) return;
-
+    
             let co2e = Math.PI * Math.pow(dbh / 2, 2) * height * selectedTree.FF * selectedTree.Rho * selectedTree.BEF * (1 + selectedTree.R) * selectedTree.CF * (44 / 12) * count;
             totalCarbonStorage += co2e;
-
+    
             let newRow = tableBody.insertRow();
             newRow.innerHTML = `<td>${serialNumber++}</td>
                                 <td>${selectedTree.type}</td>
@@ -214,38 +200,35 @@
                                 <td>${(dbh * 100).toFixed(2)}</td>
                                 <td>${count}</td>
                                 <td>${co2e.toFixed(4)}</td>`;
-
+    
             document.getElementById("totalCarbon").innerText = `總碳儲存量: ${totalCarbonStorage.toFixed(4)} 公斤 CO₂e`;
         }
+    
         function clearTable() {
-    let tableBody = document.querySelector("#carbonTable tbody");
-    tableBody.innerHTML = "";  // 清空表格內容
-    totalCarbonStorage = 0;  // 重置總碳儲存量
-    serialNumber = 1;  // 重置序號
-    document.getElementById("totalCarbon").innerText = `總碳儲存量: 0 公斤 CO₂e`;
-}
-
-
+            let tableBody = document.querySelector("#carbonTable tbody");
+            tableBody.innerHTML = "";  // 清空表格內容
+            totalCarbonStorage = 0;  // 重置總碳儲存量
+            serialNumber = 1;  // 重置序號
+            document.getElementById("totalCarbon").innerText = `總碳儲存量: 0 公斤 CO₂e`;
+        }
+    
         function exportToExcel() {
             let tableData = Array.from(document.querySelectorAll("#carbonTable tbody tr")).map(row => {
                 return Array.from(row.children).map(td => td.innerText);
             });
-
+    
             let ws = XLSX.utils.aoa_to_sheet([["#", "林型", "樹高 (m)", "胸高直徑 (cm)", "數量", "(kg CO₂e)"], ...tableData]);
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "碳儲存計算");
             XLSX.writeFile(wb, "carbon_storage.xlsx");
         }
-      <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(reg => console.log("Service Worker registered!", reg))
-    .catch(err => console.log("Service Worker registration failed!", err));
-}
-</script>
-
+    
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js")
+                .then(reg => console.log("Service Worker registered!", reg))
+                .catch(err => console.log("Service Worker registration failed!", err));
+        }
     </script>
 </body>
 <a href="https://data.moa.gov.tw/open_search.aspx?id=I82" target="_blank" class="link-btn">資料來源農業部資料開放平台</a>
-
 </html>
