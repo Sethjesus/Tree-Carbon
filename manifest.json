@@ -1,7 +1,7 @@
 {
   "name": "JP ESG 碳儲存計算",
   "short_name": "碳儲存",
-  "description": "計算樹木碳儲存量的 PWA 應用",
+  "description": "計算樹木碳儲存量的PWA應用",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
