@@ -8,68 +8,109 @@
     <meta name="theme-color" content="#28a745">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <style>
-      body {
+    body {
     font-family: Arial, sans-serif;
     text-align: center;
-   
     background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat top center;
-    background-size: contain;
-    background-attachment: fixed;/
+    background-size: cover; /* 調整為 cover 讓背景完整顯示 */
+    background-attachment: fixed;
     width: 100%;
-    max-width: 682px;
+    max-width: 100%;
     min-height: 100vh;
     margin: 0 auto;
-    overflow: auto; /* Allow scrolling */
+    overflow-x: hidden; /* 防止水平滾動 */
 }
 
-
-
-
-        }
-       .content {
-    width: 100%;
-    max-width: 500px; /* 限制寬度 */
-    background: rgba(255, 255, 255, 0.85); /* 背景色 */
+.content {
+    width: 95%;
+    max-width: 500px; /* 限制內容最大寬度 */
+    background: rgba(255, 255, 255, 0.85);
     padding: 20px;
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 20px auto;
     text-align: center;
 }
 
+/* 修正標題過寬問題 */
+h1, h2 {
+    display: inline-block;
+    max-width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px auto;
+}
 
-       select, input, button {
-    width: 90%;
-    max-width: 250px; /* 統一最大寬度 */
-    margin: 5px auto;
+/* 調整輸入框對齊 */
+.input-group {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 15px;
+}
+
+.input-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
     padding: 10px;
     font-size: 16px;
+    text-align: center;
     border-radius: 5px;
     border: 1px solid #ccc;
-    background: white;
-    display: block; /* 讓所有元素統一對齊 */
-    text-align: center;
-        }
-        label {
-            color: #eef7ef; 
-            font-size: 20px;
-            font-weight: bold;
-            display: block;
-           
-        }
-        .table-container {
+    display: block;
+}
+
+/* 調整按鈕大小 */
+button {
     width: 100%;
-    max-height: 300px; /* 調整更大高度 */
-    overflow-y: auto;
-    margin-bottom: 10px;
+    max-width: 300px;
+    margin: 10px auto;
+    display: block;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #28a745;
+    color: white;
+}
+
+button:hover {
+    background: #218838;
+}
+
+/* 清除按鈕 */
+.clr-btn {
+    background: #dc3545;
+}
+
+.clr-btn:hover {
+    background: #c82333;
+}
+
+/* 表格調整 */
+.table-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    overflow-x: auto;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     padding: 10px;
 }
 
-       table {
+table {
     width: 100%;
-    max-width: 620px;
-    margin: 0 auto;
     border-collapse: collapse;
     font-size: 14px;
 }
@@ -77,8 +118,7 @@
 th, td {
     border: 1px solid #ccc;
     padding: 8px;
-    text-align: center; /* 統一置中對齊 */
-    vertical-align: middle; /* 垂直置中 */
+    text-align: center;
 }
 
 td:last-child {
@@ -86,55 +126,23 @@ td:last-child {
     color: #28a745;
 }
 
-       h1, h2 {
-    display: inline-block; /* 讓標題根據內容大小縮放 */
-    max-width: 90%; /* 防止超出範圍 */
-    background: rgba(0, 0, 0, 0.6); /* 背景顏色 */
+/* 修正連結按鈕 */
+.link-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    text-align: center;
-    white-space: nowrap; /* 防止換行 */
-    margin: 10px auto; 
-}
-
-      button {
-    background: #28a745;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-    padding: 12px;
+    text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
-    border: none;
-    width: 100%;
-    max-width: 250px;
-    display: block;
-    margin: 10px auto;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-        button:hover {
-            background: #218838;
-        }
-        .clr-btn {
-            background: #dc3545;
-        }
-        .clr-btn:hover {
-            background: #c82333;
-        }
-        .link-btn {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #4CAF50; /* 綠色背景 */
-            color: white;
-            text-decoration: none;
-            border-radius: 5px; /* 圓角 */
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .link-btn:hover {
-            background-color: #45a049; /* 滑鼠懸停時變深色 */
-        }
+.link-btn:hover {
+    background-color: #45a049;
+}
+
 
        .input-group {
     display: flex;
