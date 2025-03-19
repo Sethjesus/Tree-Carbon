@@ -340,7 +340,15 @@ window.addEventListener("appinstalled", () => {
     console.log("PWA 已安裝！");
     document.getElementById("installPWA").style.display = "none"; // 隱藏按鈕
 });
-
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(error) {
+      console.log('ServiceWorker registration failed: ', error);
+    });
+  });
+}
     </script>
 </body>
 <button id="installPWA" style="display: none;">📥 下載應用程式</button>
