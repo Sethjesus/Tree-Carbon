@@ -184,8 +184,8 @@ select {
     <div class="content">
         <h1>JP ESG 碳儲存計算</h1>
         <h2>校園碳匯推廣方案</h2>
-        
-        <label>選擇樹種：
+        <BR>
+        <label>選擇樹種：<BR>
             <select id="treeType"></select>
         </label>
        <div class="input-group">
@@ -308,7 +308,40 @@ select {
                 .then(reg => console.log("Service Worker registered!", reg))
                 .catch(err => console.log("Service Worker registration failed!", err));
         }
+        let deferredPrompt;
+
+// 監聽 PWA 安裝提示
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    
+    // 顯示「下載應用程式」按鈕
+    document.getElementById("installPWA").style.display = "block";
+});
+
+document.getElementById("installPWA").addEventListener("click", () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt(); // 顯示安裝對話框
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === "accepted") {
+                console.log("使用者接受了 PWA 安裝");
+            } else {
+                console.log("使用者拒絕了 PWA 安裝");
+            }
+            deferredPrompt = null;
+        });
+    }
+});
+
+// 監聽 PWA 是否已安裝
+window.addEventListener("appinstalled", () => {
+    console.log("PWA 已安裝！");
+    document.getElementById("installPWA").style.display = "none"; // 隱藏按鈕
+});
+
     </script>
 </body>
+<button id="installPWA" style="display: none;">📥 下載應用程式</button>
 <a href="https://data.moa.gov.tw/open_search.aspx?id=I82" target="_blank" class="link-btn">資料來源農業部資料開放平台</a>
+
 </html>
