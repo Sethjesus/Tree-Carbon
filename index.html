@@ -11,9 +11,10 @@
       body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat center top;
-    background-size: contain; /* Ensure the whole image fits */
-    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+   
+    background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat top center;
+    background-size: contain;
+    background-attachment: fixed;/
     width: 100%;
     max-width: 682px;
     min-height: 100vh;
@@ -26,12 +27,14 @@
 
         }
         .content {
-            padding: 10px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    width: 100%;
+    max-width: 500px;  /* Adjust to a more reasonable size */
+    background: rgba(255, 255, 255, 0.85); /* Light background for readability */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
        select, input, button {
     width: 90%;
     max-width: 250px; /* 統一最大寬度 */
@@ -125,29 +128,30 @@ td:last-child {
             background-color: #45a049; /* 滑鼠懸停時變深色 */
         }
 
-        .input-group {
-    width: 100%;
-    max-width: 300px;
+       .input-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10px;
-    text-align: left;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 .input-group label {
-    width: 100%;
     font-size: 18px;
-    color: white;
     font-weight: bold;
+    color: #333;  /* Use dark text for readability */
     margin-bottom: 5px;
 }
 
 .input-group input {
-    width: 100%;
-    max-width: 280px;
+    width: 90%;
+    max-width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
     text-align: center;
 }
+
 select {
     width: 100%;
     max-width: 250px;
