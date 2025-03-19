@@ -26,14 +26,16 @@
 
 
         }
-        .content {
+       .content {
     width: 100%;
-    max-width: 500px;  /* Adjust to a more reasonable size */
-    background: rgba(255, 255, 255, 0.85); /* Light background for readability */
+    max-width: 500px; /* 限制寬度 */
+    background: rgba(255, 255, 255, 0.85); /* 背景色 */
     padding: 20px;
     border-radius: 10px;
-   
+    margin: 0 auto;
+    text-align: center;
 }
+
 
        select, input, button {
     width: 90%;
@@ -84,12 +86,17 @@ td:last-child {
     color: #28a745;
 }
 
-        h1, h2 {
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-        }
+       h1, h2 {
+    display: inline-block; /* 讓標題根據內容大小縮放 */
+    max-width: 90%; /* 防止超出範圍 */
+    background: rgba(0, 0, 0, 0.6); /* 背景顏色 */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-align: center;
+    white-space: nowrap; /* 防止換行 */
+}
+
       button {
     background: #28a745;
     color: white;
