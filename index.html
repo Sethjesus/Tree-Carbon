@@ -207,6 +207,7 @@ select {
         <button id="calculateBtn">計算碳儲存量</button>
         <button id="exportExcel">匯出 Excel</button>
         <button id="clearTable" class="clr-btn">CLR</button>
+        <button id="installPWA" style="display: none;">📥 下載應用程式</button>
     
         <h2>碳儲存量比較表：</h2>
         <div class="table-container">
@@ -256,6 +257,37 @@ select {
             document.getElementById("calculateBtn").addEventListener("click", calculateCarbon);
             document.getElementById("exportExcel").addEventListener("click", exportToExcel);
             document.getElementById("clearTable").addEventListener("click", clearTable);
+
+            // 監聽 PWA 安裝提示
+            window.addEventListener("beforeinstallprompt", (event) => {
+                event.preventDefault();
+                deferredPrompt = event;
+                
+                // 顯示「下載應用程式」按鈕
+                let installButton = document.getElementById("installPWA");
+                installButton.style.display = "block";
+        
+                installButton.addEventListener("click", () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt(); // 顯示安裝對話框
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === "accepted") {
+                                console.log("使用者接受了 PWA 安裝");
+                            } else {
+                                console.log("使用者拒絕了 PWA 安裝");
+                            }
+                            deferredPrompt = null;
+                            installButton.style.display = "none"; // 安裝完成後隱藏按鈕
+                        });
+                    }
+                });
+            });
+
+            // 監聽 PWA 是否已安裝
+            window.addEventListener("appinstalled", () => {
+                console.log("PWA 已安裝！");
+                document.getElementById("installPWA").style.display = "none"; // 隱藏按鈕
+            });
         });
     
         let totalCarbonStorage = 0;
@@ -310,39 +342,7 @@ select {
         }
     
         let deferredPrompt;
-    
-        // 監聽 PWA 安裝提示
-        window.addEventListener("beforeinstallprompt", (event) => {
-            event.preventDefault();
-            deferredPrompt = event;
-            
-            // 顯示「下載應用程式」按鈕
-            let installButton = document.getElementById("installPWA");
-            installButton.style.display = "block";
-    
-            installButton.addEventListener("click", () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt(); // 顯示安裝對話框
-                    deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === "accepted") {
-                            console.log("使用者接受了 PWA 安裝");
-                        } else {
-                            console.log("使用者拒絕了 PWA 安裝");
-                        }
-                        deferredPrompt = null;
-                        installButton.style.display = "none"; // 安裝完成後隱藏按鈕
-                    });
-                }
-            });
-        });
-    
-        // 監聽 PWA 是否已安裝
-        window.addEventListener("appinstalled", () => {
-            console.log("PWA 已安裝！");
-            document.getElementById("installPWA").style.display = "none"; // 隱藏按鈕
-        });
     </script>
 </body>
-<button id="installPWA" style="display: none;">📥 下載應用程式</button>
 <a href="https://data.moa.gov.tw/open_search.aspx?id=I82" target="_blank" class="link-btn">資料來源農業部資料開放平台</a>
 </html>
