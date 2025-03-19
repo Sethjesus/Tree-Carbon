@@ -8,18 +8,20 @@
     <meta name="theme-color" content="#28a745">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <style>
-       body {
+      body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat center center;
-    background-size: cover; /* 調整背景填滿 */
+    background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat center top;
+    background-size: contain; /* Ensure the whole image fits */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
     width: 100%;
     max-width: 682px;
-    height: auto;
     min-height: 100vh;
     margin: 0 auto;
-    overflow: auto; /* 允許滾動 */
+    overflow: auto; /* Allow scrolling */
 }
+
+
 
 
         }
