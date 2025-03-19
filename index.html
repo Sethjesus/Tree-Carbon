@@ -308,7 +308,7 @@ select {
                 .then(reg => console.log("Service Worker registered!", reg))
                 .catch(err => console.log("Service Worker registration failed!", err));
         }
-        let deferredPrompt;
+     let deferredPrompt;
 
 // 監聽 PWA 安裝提示
 window.addEventListener("beforeinstallprompt", (event) => {
@@ -316,21 +316,23 @@ window.addEventListener("beforeinstallprompt", (event) => {
     deferredPrompt = event;
     
     // 顯示「下載應用程式」按鈕
-    document.getElementById("installPWA").style.display = "block";
-});
+    let installButton = document.getElementById("installPWA");
+    installButton.style.display = "block";
 
-document.getElementById("installPWA").addEventListener("click", () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt(); // 顯示安裝對話框
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === "accepted") {
-                console.log("使用者接受了 PWA 安裝");
-            } else {
-                console.log("使用者拒絕了 PWA 安裝");
-            }
-            deferredPrompt = null;
-        });
-    }
+    installButton.addEventListener("click", () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt(); // 顯示安裝對話框
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === "accepted") {
+                    console.log("使用者接受了 PWA 安裝");
+                } else {
+                    console.log("使用者拒絕了 PWA 安裝");
+                }
+                deferredPrompt = null;
+                installButton.style.display = "none"; // 安裝完成後隱藏按鈕
+            });
+        }
+    });
 });
 
 // 監聽 PWA 是否已安裝
