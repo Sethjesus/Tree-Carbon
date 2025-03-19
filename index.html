@@ -3,220 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>🌳JP ESG 碳儲存計算</title>
+    <title>JP ESG 碳儲存計算</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#28a745">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <style>
     body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat top center;
-        background-size: cover; /* 調整為 cover 讓背景完整顯示 */
-        background-attachment: fixed;
-        width: 100%;
-        max-width: 100%;
-        min-height: 100vh;
-        margin: 0 auto;
-        overflow-x: hidden; /* 防止水平滾動 */
-    }
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.3) url('https://raw.githubusercontent.com/Sethjesus/Tree-Carbon/main/Plant.jpg') no-repeat top center;
+    background-size: cover; /* 調整為 cover 讓背景完整顯示 */
+    background-attachment: fixed;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    overflow-x: hidden; /* 防止水平滾動 */
+}
 
-    .content {
-        width: 95%;
-        max-width: 500px; /* 限制內容最大寬度 */
-        background: rgba(255, 255, 255, 0.85);
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px auto;
-        text-align: center;
-    }
+.content {
+    width: 95%;
+    max-width: 500px; /* 限制內容最大寬度 */
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    text-align: center;
+}
 
-    /* 修正標題過寬問題 */
-    h1, h2 {
-        display: inline-block;
-        max-width: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
-        padding: 10px 20px;
-        border-radius: 10px;
-        text-align: center;
-        margin: 10px auto;
-    }
+/* 修正標題過寬問題 */
+h1, h2 {
+    display: inline-block;
+    max-width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px auto;
+}
 
-    /* 調整輸入框對齊 */
-    .input-group {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto 15px;
-    }
+/* 調整輸入框對齊 */
+.input-group {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 15px;
+}
 
-    .input-group label {
-        font-size: 16px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px;
-        display: block;
-    }
+.input-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
 
-    .input-group input,
-    .input-group select {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        text-align: center;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        display: block;
-    }
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: block;
+}
 
-    /* 調整按鈕大小 */
-    button {
-        width: 100%;
-        max-width: 300px;
-        margin: 10px auto;
-        display: block;
-        padding: 12px;
-        font-size: 16px;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-        background: #28a745;
-        color: white;
-    }
+/* 調整按鈕大小 */
+button {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    display: block;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #28a745;
+    color: white;
+}
 
-    button:hover {
-        background: #218838;
-    }
+button:hover {
+    background: #218838;
+}
 
-    /* 清除按鈕 */
-    .clr-btn {
-        background: #dc3545;
-    }
+/* 清除按鈕 */
+.clr-btn {
+    background: #dc3545;
+}
 
-    .clr-btn:hover {
-        background: #c82333;
-    }
+.clr-btn:hover {
+    background: #c82333;
+}
 
-    /* 表格調整 */
-    .table-container {
-        width: 100%;
-        max-width: 500px;
-        margin: 20px auto;
-        overflow-x: auto;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 10px;
-        padding: 10px;
-    }
+/* 表格調整 */
+.table-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 10px;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
 
-    th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: center;
-    }
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
 
-    td:last-child {
-        font-weight: bold;
-        color: #28a745;
-    }
+td:last-child {
+    font-weight: bold;
+    color: #28a745;
+}
 
-    /* 修正連結按鈕 */
-    .link-btn {
-        display: inline-block;
-        padding: 10px 15px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-        font-weight: bold;
-        margin-top: 10px;
-    }
+/* 修正連結按鈕 */
+.link-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
-    .link-btn:hover {
-        background-color: #45a049;
-    }
+.link-btn:hover {
+    background-color: #45a049;
+}
 
-    .input-group {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 15px;
-    }
 
-    .input-group label {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px; /* 保證標籤與輸入框間有適當距離 */
-    }
+   .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
 
-    .input-group select, 
-    .input-group input {
-        width: 100%;
-        max-width: 300px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        text-align: center;
-    }
+.input-group label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;  /* Use dark text for readability */
+    margin-bottom: 5px;
+}
 
-    label {
-        display: block;  /* 讓 label 獨立一行 */
-        margin-bottom: 15px; /* 增加下方間距 */
-    }
+.input-group input {
+    width: 90%;
+    max-width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
 
-    /* Media query for smaller screens */
-    @media (max-width: 600px) {
-        h1, h2 {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .input-group {
-            width: 100%;
-            display: block;
-        }
-    }
+select {
+    width: 100%;
+    max-width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
 
     </style>
 </head>
 <body>
     <div class="content">
-        <h1>🌳JP ESG 碳儲存計算</h1>
+        <h1>JP ESG 碳儲存計算</h1>
         <h2>校園碳匯推廣方案</h2>
-        <div class="input-group">
-            <label for="treeType">選擇樹種：</label>
+        <BR>
+        <label>選擇樹種：<BR>
             <select id="treeType"></select>
-        </div>
+        </label>
+       <div class="input-group">
+    <label>輸入樹高（公尺）：</label>
+    <input type="number" id="treeHeight" value="10">
+</div>
 
-        <div class="input-group">
-            <label for="treeHeight">輸入樹高（公尺）：</label>
-            <input type="number" id="treeHeight" value="10">
-        </div>
+<div class="input-group">
+    <label>輸入胸高直徑（公分）：</label>
+    <input type="number" id="treeDiameter" value="10">
+</div>
 
-        <div class="input-group">
-            <label for="treeDiameter">輸入胸高直徑（公分）：</label>
-            <input type="number" id="treeDiameter" value="10">
-        </div>
+<div class="input-group">
+    <label>輸入樹木數量：</label>
+    <input type="number" id="treeCount" value="1">
+</div>
 
-        <div class="input-group">
-            <label for="treeCount">輸入樹木數量：</label>
-            <input type="number" id="treeCount" value="1">
-        </div>
-
+    
         <button id="calculateBtn">計算碳儲存量</button>
         <button id="exportExcel">匯出 Excel</button>
         <button id="clearTable" class="clr-btn">CLR</button>
-
+    
         <h2>碳儲存量比較表：</h2>
         <div class="table-container">
             <table id="carbonTable">
@@ -233,10 +224,10 @@
                 <tbody></tbody>
             </table>
         </div>
-
+    
         <h2 id="totalCarbon">總碳儲存量: 0 公斤 CO₂e</h2>
     </div>
-
+    
     <script>
         const treeData = [
             { type: "天然針葉林", BEF: 1.27, R: 0.22, CF: 0.4821, Rho: 0.41, FF: 0.45 },
@@ -248,7 +239,7 @@
             { type: "木竹混交林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
             { type: "竹林", BEF: 1.4, R: 0.46, CF: 0.4732, Rho: 0.62, FF: 0.45 }
         ];
-
+    
         function populateTreeTypes() {
             let select = document.getElementById("treeType");
             select.innerHTML = "";
@@ -259,29 +250,29 @@
                 select.appendChild(option);
             });
         }
-
+    
         document.addEventListener("DOMContentLoaded", () => {
             populateTreeTypes();
             document.getElementById("calculateBtn").addEventListener("click", calculateCarbon);
             document.getElementById("exportExcel").addEventListener("click", exportToExcel);
             document.getElementById("clearTable").addEventListener("click", clearTable);
         });
-
+    
         let totalCarbonStorage = 0;
         let serialNumber = 1;
-
+    
         function calculateCarbon() {
             let tableBody = document.querySelector("#carbonTable tbody");
             let height = parseFloat(document.getElementById("treeHeight").value);
             let dbh = parseFloat(document.getElementById("treeDiameter").value) / 100;
             let count = parseInt(document.getElementById("treeCount").value, 10);
             let selectedTree = treeData.find(tree => tree.type === document.getElementById("treeType").value);
-
+    
             if (!selectedTree) return;
-
+    
             let co2e = Math.PI * Math.pow(dbh / 2, 2) * height * selectedTree.FF * selectedTree.Rho * selectedTree.BEF * (1 + selectedTree.R) * selectedTree.CF * (44 / 12) * count;
             totalCarbonStorage += co2e;
-
+    
             let newRow = tableBody.insertRow();
             newRow.innerHTML = `<td>${serialNumber++}</td>
                                 <td>${selectedTree.type}</td>
@@ -289,10 +280,10 @@
                                 <td>${(dbh * 100).toFixed(2)}</td>
                                 <td>${count}</td>
                                 <td>${co2e.toFixed(4)}</td>`;
-
+    
             document.getElementById("totalCarbon").innerText = `總碳儲存量: ${totalCarbonStorage.toFixed(4)} 公斤 CO₂e`;
         }
-
+    
         function clearTable() {
             let tableBody = document.querySelector("#carbonTable tbody");
             tableBody.innerHTML = "";  // 清空表格內容
@@ -300,67 +291,58 @@
             serialNumber = 1;  // 重置序號
             document.getElementById("totalCarbon").innerText = `總碳儲存量: 0 公斤 CO₂e`;
         }
-
+    
         function exportToExcel() {
             let tableData = Array.from(document.querySelectorAll("#carbonTable tbody tr")).map(row => {
                 return Array.from(row.children).map(td => td.innerText);
             });
-
+    
             let ws = XLSX.utils.aoa_to_sheet([["#", "林型", "樹高 (m)", "胸高直徑 (cm)", "數量", "(kg CO₂e)"], ...tableData]);
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "碳儲存計算");
             XLSX.writeFile(wb, "carbon_storage.xlsx");
         }
-
+    
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("sw.js")
+            navigator.serviceWorker.register("/service-worker.js")
                 .then(reg => console.log("Service Worker registered!", reg))
                 .catch(err => console.log("Service Worker registration failed!", err));
         }
-     let deferredPrompt;
-
- // 監聽 PWA 安裝提示
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
     
-    // 顯示「下載應用程式」按鈕
-    let installButton = document.getElementById("installPWA");
-    installButton.style.display = "block";
-
-    installButton.addEventListener("click", () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt(); // 顯示安裝對話框
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === "accepted") {
-                    console.log("使用者接受了 PWA 安裝");
-                } else {
-                    console.log("使用者拒絕了 PWA 安裝");
+        let deferredPrompt;
+    
+        // 監聽 PWA 安裝提示
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            deferredPrompt = event;
+            
+            // 顯示「下載應用程式」按鈕
+            let installButton = document.getElementById("installPWA");
+            installButton.style.display = "block";
+    
+            installButton.addEventListener("click", () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt(); // 顯示安裝對話框
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === "accepted") {
+                            console.log("使用者接受了 PWA 安裝");
+                        } else {
+                            console.log("使用者拒絕了 PWA 安裝");
+                        }
+                        deferredPrompt = null;
+                        installButton.style.display = "none"; // 安裝完成後隱藏按鈕
+                    });
                 }
-                deferredPrompt = null;
-                installButton.style.display = "none"; // 安裝完成後隱藏按鈕
             });
-        }
-    });
-});
-
-// 監聽 PWA 是否已安裝
-window.addEventListener("appinstalled", () => {
-    console.log("PWA 已安裝！");
-    document.getElementById("installPWA").style.display = "none"; // 隱藏按鈕
-});
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(error) {
-      console.log('ServiceWorker registration failed: ', error);
-    });
-  });
-}
+        });
+    
+        // 監聽 PWA 是否已安裝
+        window.addEventListener("appinstalled", () => {
+            console.log("PWA 已安裝！");
+            document.getElementById("installPWA").style.display = "none"; // 隱藏按鈕
+        });
     </script>
 </body>
 <button id="installPWA" style="display: none;">📥 下載應用程式</button>
 <a href="https://data.moa.gov.tw/open_search.aspx?id=I82" target="_blank" class="link-btn">資料來源農業部資料開放平台</a>
-
 </html>
