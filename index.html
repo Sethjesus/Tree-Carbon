@@ -144,7 +144,7 @@ td:last-child {
 }
 
 
-       .input-group {
+  .input-group {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -155,28 +155,20 @@ td:last-child {
 .input-group label {
     font-size: 18px;
     font-weight: bold;
-    color: #333;  /* Use dark text for readability */
-    margin-bottom: 5px;
+    color: #333;  
+    margin-bottom: 5px; /* 保證標籤與輸入框間有適當距離 */
 }
 
+.input-group select, 
 .input-group input {
-    width: 90%;
+    width: 100%;
     max-width: 300px;
-    padding: 8px;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     text-align: center;
 }
 
-select {
-    width: 100%;
-    max-width: 250px;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
 label {
     display: block;  /* 讓 label 獨立一行 */
     margin-bottom: 15px; /* 增加下方間距 */
@@ -188,23 +180,23 @@ label {
     <div class="content">
         <h1>🌳JP ESG 碳儲存計算</h1>
         <h2>校園碳匯推廣方案</h2>
-        <BR>
-        <BR>
-        <label>選擇樹種：<BR>
-            <select id="treeType"></select>
-        </label>
-       <div class="input-group">
-    <label>輸入樹高（公尺）：</label>
+        <div class="input-group">
+    <label for="treeType">選擇樹種：</label>
+    <select id="treeType"></select>
+</div>
+
+<div class="input-group">
+    <label for="treeHeight">輸入樹高（公尺）：</label>
     <input type="number" id="treeHeight" value="10">
 </div>
 
 <div class="input-group">
-    <label>輸入胸高直徑（公分）：</label>
+    <label for="treeDiameter">輸入胸高直徑（公分）：</label>
     <input type="number" id="treeDiameter" value="10">
 </div>
 
 <div class="input-group">
-    <label>輸入樹木數量：</label>
+    <label for="treeCount">輸入樹木數量：</label>
     <input type="number" id="treeCount" value="1">
 </div>
 
