@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -185,6 +186,59 @@ select {
         <h1>🌴JP ESG 碳儲存計算🌳</h1>
         <h2>校園碳匯推廣方案</h2>
         <BR>
+            <div class="input-group">
+    <label>選擇學校名稱：</label>
+   <select id="schoolSelect">
+  <option value="">請選擇國小</option>
+
+  <!-- 基隆市 -->
+  <optgroup label="基隆市">
+    <option value="基隆市中和國小">基隆市中和國小</option>
+    <option value="基隆市仙洞國小">基隆市仙洞國小</option>
+    <option value="基隆市七堵國小">基隆市七堵國小</option>
+    <option value="基隆市華興國小">基隆市華興國小</option>
+    <option value="基隆市中正國小">基隆市中正國小</option>
+    <option value="基隆市正濱國小">基隆市正濱國小</option>
+    <option value="基隆市忠孝國小">基隆市忠孝國小</option>
+    <option value="基隆市和平國小">基隆市和平國小</option>
+    <option value="基隆市八斗國小">基隆市八斗國小</option>
+    <!-- … 此處可補其他區所有校名 … -->
+  </optgroup>
+
+  <!-- 新北市 -->
+  <optgroup label="新北市">
+    <option value="新北市板橋國小">新北市板橋國小</option>
+    <option value="新北市國光國小">新北市國光國小</option>
+    <option value="新北市文德國小">新北市文德國小</option>
+    <!-- 以上資料取材自板橋區通訊錄:contentReference[oaicite:1]{index=1} -->
+    <option value="新北市淡水區新市國小">新北市淡水區新市國小</option>
+    <option value="新北市新店區新店國小">新北市新店區新店國小</option>
+    <option value="新北市新莊區新莊國小">新北市新莊區新莊國小</option>
+    <option value="新北市板橋區板橋國小">新北市板橋區板橋國小</option>
+    <!-- 可補充其他學校 -->
+  </optgroup>
+
+  <!-- 台北市 -->
+  <optgroup label="台北市">
+    <option value="台北市日新國小">台北市日新國小</option>
+    <option value="台北市太平國小">台北市太平國小</option>
+    <option value="台北市永樂國小">台北市永樂國小</option>
+    <option value="台北市幸安國小">台北市幸安國小</option>
+    <!-- 該資料來自台北市教育局列表:contentReference[oaicite:2]{index=2} -->
+  </optgroup>
+
+  <!-- 桃園市 -->
+  <optgroup label="桃園市">
+    <option value="桃園市桃園國小">桃園市桃園國小</option>
+    <option value="桃園市東門國小">桃園市東門國小</option>
+    <option value="桃園市中埔國小">桃園市中埔國小</option>
+    <option value="桃園市成功國小">桃園市成功國小</option>
+    <!-- 資料來源桃園市教育局:contentReference[oaicite:3]{index=3} -->
+  </optgroup>
+</select>
+
+     </div>
+
         <label>選擇樹種：<BR>
             <select id="treeType"></select>
         </label>
@@ -212,16 +266,18 @@ select {
         <h2>碳儲存量比較表：</h2>
         <div class="table-container">
             <table id="carbonTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>林型</th>
-                        <th>樹高 (m)</th>
-                        <th>胸高直徑 (cm)</th>
-                        <th>數量</th>
-                        <th>(kg CO₂e)</th>
-                    </tr>
-                </thead>
+        <thead>
+        <tr>
+        <th>#</th>
+        <th>學校名稱</th> <!-- 新增 -->
+        <th>林型</th>
+        <th>樹高 (m)</th>
+        <th>胸高直徑 (cm)</th>
+        <th>數量</th>
+        <th>(kg CO₂e)</th>
+        </tr>
+        </thead>
+
                 <tbody></tbody>
             </table>
         </div>
@@ -238,7 +294,16 @@ select {
             { type: "人工針闊葉混交林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
             { type: "人工闊葉林", BEF: 1.4, R: 0.24, CF: 0.4691, Rho: 0.56, FF: 0.45 },
             { type: "木竹混交林", BEF: 1.34, R: 0.23, CF: 0.4756, Rho: 0.49, FF: 0.45 },
-            { type: "竹林", BEF: 1.4, R: 0.46, CF: 0.4732, Rho: 0.62, FF: 0.45 }
+            { type: "竹林", BEF: 1.4, R: 0.46, CF: 0.4732, Rho: 0.62, FF: 0.45 },
+            { type: "龍柏立木", BEF: 1.4, R: 0.24, CF: 0.4908, Rho: 0.704, FF: 0.4 },
+            { type: "台灣櫟樹", BEF: 1.4, R: 0.24, CF: 0.4743, Rho: 0.6, FF: 0.4 },
+            { type: "小葉南洋杉", BEF: 1.4, R: 0.24, CF: 0.4821, Rho: 0.48, FF: 0.4 },
+            { type: "芒果樹", BEF: 1.4, R: 0.24, CF: 0.4474, Rho: 0.55, FF: 0.4 },
+            { type: "楓香", BEF: 1.4, R: 0.24, CF: 0.489, Rho: 0.49, FF: 0.4 },
+            { type: "流蘇", BEF: 1.4, R: 0.24, CF: 0.469, Rho: 0.68, FF: 0.4 },
+            { type: "大王椰子", BEF: 1.4, R: 0.24, CF: 0.4691, Rho: 0.5, FF: 0.4 },
+            { type: "榕樹", BEF: 1.4, R: 0.24, CF: 0.4356, Rho: 0.41, FF: 0.4 },
+            { type: "山櫻花", BEF: 1.4, R: 0.24, CF: 0.4773, Rho: 0.59, FF: 0.4 },
         ];
     
         function populateTreeTypes() {
@@ -299,19 +364,27 @@ select {
             let dbh = parseFloat(document.getElementById("treeDiameter").value) / 100;
             let count = parseInt(document.getElementById("treeCount").value, 10);
             let selectedTree = treeData.find(tree => tree.type === document.getElementById("treeType").value);
-    
+            let school = document.getElementById("schoolSelect").value;
+            if (!school) {
+            alert("請選擇學校名稱！");
+            return;
+}
+
             if (!selectedTree) return;
     
-            let co2e = Math.PI * Math.pow(dbh / 2, 2) * height * selectedTree.FF * selectedTree.Rho * selectedTree.BEF * (1 + selectedTree.R) * selectedTree.CF * (44 / 12) * count;
+            let co2e = Math.PI * Math.pow(dbh / 2, 2) * height * selectedTree.FF *
+            selectedTree.Rho * selectedTree.BEF * (1 + selectedTree.R) *
+            selectedTree.CF * (44 / 12) * count * 1000;   // ← ★乘 1000
             totalCarbonStorage += co2e;
-    
             let newRow = tableBody.insertRow();
             newRow.innerHTML = `<td>${serialNumber++}</td>
-                                <td>${selectedTree.type}</td>
-                                <td>${height}</td>
-                                <td>${(dbh * 100).toFixed(2)}</td>
-                                <td>${count}</td>
-                                <td>${co2e.toFixed(4)}</td>`;
+                    <td>${school}</td>
+                    <td>${selectedTree.type}</td>
+                    <td>${height}</td>
+                    <td>${(dbh * 100).toFixed(2)}</td>
+                    <td>${count}</td>
+                    <td>${co2e.toFixed(4)}</td>`;
+
     
             document.getElementById("totalCarbon").innerText = `總碳儲存量: ${totalCarbonStorage.toFixed(4)} 公斤 CO₂e`;
         }
@@ -329,7 +402,7 @@ select {
                 return Array.from(row.children).map(td => td.innerText);
             });
     
-            let ws = XLSX.utils.aoa_to_sheet([["#", "林型", "樹高 (m)", "胸高直徑 (cm)", "數量", "(kg CO₂e)"], ...tableData]);
+            let ws = XLSX.utils.aoa_to_sheet([["#", "學校名稱", "林型", "樹高 (m)", "胸高直徑 (cm)", "數量", "(kg CO₂e)"], ...tableData]);
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "碳儲存計算");
             XLSX.writeFile(wb, "carbon_storage.xlsx");
